@@ -1,6 +1,7 @@
 export interface MenuItem {
- label: string;
- href: string;
- icon: string;
- section: 'main' | 'system' | 'footer';
+  label: string;
+  href: string;
+  icon: string;
+  external?: boolean;
+  section: 'main' | 'system' | 'profile' | 'footer';
 }

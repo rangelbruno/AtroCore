@@ -9,18 +9,19 @@ const { item } = Astro.props;
 ---
 
 <div class="relative menu-item group">
-  <a
-    href={item.href}
-    class="flex items-center px-4 py-2 text-gray-400 hover:bg-gray-800 hover:text-white"
+<a
+  href={item.href}
+  class="flex items-center px-4 py-2 text-gray-400 hover:bg-gray-800 hover:text-white"
+  target={item.external ? "_blank" : undefined}
+  rel={item.external ? "noopener noreferrer" : undefined}
   >
-    <i class:list={[item.icon, "w-6"]}></i>
-    <span class="ml-2 sidebar-content">{item.label}</span>
-  </a>
-  <div
-    class="tooltip absolute left-20 top-1/2 -translate-y-1/2 px-2 py-1 bg-black rounded text-white text-sm whitespace-nowrap"
-  >
-    {item.label}
-  </div>
+  <i class:list={[item.icon, "w-6"]}></i>
+  <span class="ml-2 sidebar-content">{item.label}</span>
+</div>
+<div
+  class="tooltip absolute left-20 top-1/2 -translate-y-1/2 px-2 py-1 bg-black rounded text-white text-sm whitespace-nowrap"
+>
+  {item.label}
 </div>
 
 <style>
