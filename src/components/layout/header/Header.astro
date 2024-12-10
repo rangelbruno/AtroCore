@@ -1,0 +1,29 @@
+---
+import Search from "./Search.astro";
+import ThemeToggle from "./ThemeToggle.astro";
+import ActionsMenu from "./ActionsMenu.astro";
+
+interface Props {
+  searchPlaceholder?: string;
+  class?: string;
+}
+
+const { searchPlaceholder = "Search...", class: className = "" } = Astro.props;
+---
+
+<header
+  class:list={[
+    "bg-white dark:bg-gray-800",
+    "shadow-sm dark:shadow-gray-900",
+    "border-b border-gray-200 dark:border-gray-700",
+    className,
+  ]}
+>
+  <div class="flex items-center justify-between px-4 py-3">
+    <Search placeholder={searchPlaceholder} />
+    <div class="flex items-center space-x-4">
+      <ThemeToggle />
+      <ActionsMenu />
+    </div>
+  </div>
+</header>

@@ -1,0 +1,31 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Sidebar from "../components/layout/sidebar/index.astro";
+import Header from "../components/layout/header/Header.astro";
+
+const title = "AstroCore Dashboard";
+---
+
+<Layout {title}>
+  <Sidebar slot="sidebar" />
+  <Header searchPlaceholder="Buscar..." slot="header" />
+
+  <main class="p-6 bg-gray-50 dark:bg-gray-800 min-h-screen">
+    <div class="container mx-auto">
+      <div
+        class="bg-white dark:bg-gray-900 rounded-lg shadow-sm dark:shadow-gray-900 p-6"
+      >
+        <h2 class="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">
+          {title}
+        </h2>
+
+        <div class="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+            Componentes de exemplo
+          </h3>
+        </div>
+
+      </div>
+    </div>
+  </main>
+</Layout>

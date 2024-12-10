@@ -1,0 +1,130 @@
+---
+interface MenuItem {
+  label: string;
+  href: string;
+  icon: string;
+  section?: string;
+}
+
+const menuItems: MenuItem[] = [
+  { label: "Dashboard", href: "/", icon: "fas fa-chart-line", section: "main" },
+
+];
+
+const mainMenuItems = menuItems.filter((item) => item.section === "main");
+const systemMenuItems = menuItems.filter((item) => item.section === "system");
+---
+
+<aside
+  id="sidebar"
+  class="h-screen flex flex-col w-64 bg-gray-900 text-white transition-all duration-300"
+>
+  <div class="flex justify-between p-4 border-b border-gray-800">
+    <div class="flex items-center space-x-2 overflow-hidden">
+      <i class="fas fa-ghost text-2xl"></i>
+      <h1 class="text-2xl font-semibold sidebar-content">Ghostt</h1>
+    </div>
+    <button id="toggle-sidebar" class="text-gray-400 hover:text-white">
+      <i class="fas fa-chevron-left transition-transform"></i>
+    </button>
+  </div>
+
+  <nav class="flex-1 py-4">
+    <div class="space-y-1">
+      {
+        mainMenuItems.map((item) => (
+          <div class="relative menu-item">
+            <a
+              href={item.href}
+              class="flex items-center px-4 py-2 text-gray-400 hover:bg-gray-800 hover:text-white"
+            >
+              <i class:list={[item.icon, "w-6"]} />
+              <span class="ml-2 sidebar-content">{item.label}</span>
+            </a>
+            <div class="tooltip opacity-0 pointer-events-none absolute left-16 top-1/2 -translate-y-1/2 px-2 py-1 bg-black rounded text-white text-sm whitespace-nowrap">
+              {item.label}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="mt-6 space-y-1">
+      {
+        systemMenuItems.map((item) => (
+          <div class="relative menu-item">
+            <a
+              href={item.href}
+              class="flex items-center px-4 py-2 text-gray-400 hover:bg-gray-800 hover:text-white"
+            >
+              <i class:list={[item.icon, "w-6"]} />
+              <span class="ml-2 sidebar-content">{item.label}</span>
+            </a>
+            <div class="tooltip opacity-0 pointer-events-none absolute left-16 top-1/2 -translate-y-1/2 px-2 py-1 bg-black rounded text-white text-sm whitespace-nowrap">
+              {item.label}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </nav>
+
+  <div class="border-t border-gray-800 p-4">
+    <div class="relative menu-item">
+      <a
+        href="/docs"
+        class="flex items-center text-gray-400 hover:bg-gray-800 hover:text-white rounded p-2"
+      >
+        <i class="fas fa-book w-6"></i>
+        <span class="ml-2 sidebar-content">Documentação</span>
+      </a>
+      <div
+        class="tooltip opacity-0 pointer-events-none absolute left-16 top-1/2 -translate-y-1/2 px-2 py-1 bg-black rounded text-white text-sm whitespace-nowrap"
+      >
+        Documentação
+      </div>
+    </div>
+  </div>
+</aside>
+
+<style>
+  .menu-item:hover .tooltip {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .w-16 .menu-item:hover .tooltip {
+    opacity: 1;
+    pointer-events: auto;
+  }
+</style>
+
+<script>
+  function initSidebar() {
+    const sidebar = document.querySelector("#sidebar");
+    const toggleBtn = document.querySelector("#toggle-sidebar");
+    const content = document.querySelectorAll(".sidebar-content");
+    const icon = toggleBtn?.querySelector("i");
+    let isCollapsed = false;
+
+    toggleBtn?.addEventListener("click", () => {
+      sidebar?.classList.toggle("w-64");
+      sidebar?.classList.toggle("w-16");
+      content.forEach((el) => el.classList.toggle("hidden"));
+      icon?.classList.toggle("rotate-180");
+      isCollapsed = !isCollapsed;
+      localStorage.setItem("sidebarCollapsed", String(isCollapsed));
+    });
+
+    const savedState = localStorage.getItem("sidebarCollapsed") === "true";
+    if (savedState) {
+      sidebar?.classList.add("w-16");
+      sidebar?.classList.remove("w-64");
+      content.forEach((el) => el.classList.add("hidden"));
+      icon?.classList.add("rotate-180");
+      isCollapsed = true;
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", initSidebar);
+</script>

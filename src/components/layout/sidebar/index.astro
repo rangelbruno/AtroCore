@@ -1,0 +1,78 @@
+---
+import { menuItems } from "./menu-data";
+import MenuLink from "./menu-link.astro";
+import { SECTIONS } from "./constants";
+
+const { MAIN, SYSTEM } = SECTIONS;
+const filterBySection = (section: string) =>
+  menuItems.filter((item) => item.section === section);
+
+const mainMenuItems = filterBySection(MAIN);
+const systemMenuItems = filterBySection(SYSTEM);
+---
+
+<aside
+  id="sidebar"
+  class="h-screen flex flex-col w-64 bg-gray-900 text-white transition-all duration-300"
+  aria-label="Navegação principal"
+  role="navigation"
+>
+  <header class="flex justify-between p-4 border-b border-gray-800">
+    <div class="flex items-center space-x-2">
+      <i class="fa-brands fa-space-awesome text-2xl"></i>
+      <h1 class="text-2xl font-semibold sidebar-content">AstroCore</h1>
+    </div>
+    <button
+      id="toggle-sidebar"
+      aria-label="Colapsar menu lateral"
+      class="text-gray-400 hover:text-white"
+    >
+      <i class="fas fa-chevron-left transition-transform"></i>
+    </button>
+  </header>
+
+  <nav class="flex-1 py-4 space-y-6">
+    <section>
+      {mainMenuItems.map((item) => <MenuLink {item} />)}
+    </section>
+
+    <section>
+      {systemMenuItems.map((item) => <MenuLink {item} />)}
+    </section>
+  </nav>
+
+  <footer class="mt-auto border-t border-gray-800">
+    <div class="px-4 py-3 flex items-center justify-center">
+      <MenuLink
+        item={{
+          label: "Documentação",
+          href: "/",
+          icon: "fas fa-book",
+          section: "footer",
+        }}
+      />
+    </div>
+  </footer>
+</aside>
+
+<style>
+  .menu-item:hover .tooltip {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .w-16 .menu-item:hover .tooltip {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .tooltip {
+    @apply opacity-0 pointer-events-none absolute left-16 top-1/2 -translate-y-1/2
+          px-2 py-1 bg-black rounded text-white text-sm whitespace-nowrap;
+  }
+</style>
+
+<script>
+  import { initSidebar } from "./controller";
+  document.addEventListener("DOMContentLoaded", initSidebar);
+</script>
